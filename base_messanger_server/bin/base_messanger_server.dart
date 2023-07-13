@@ -35,13 +35,10 @@ Future<Response> handleRequest(Request request) async {
 
         db.dispose();
 
-        if (output == '') {
-          errorString = "true";
-        }
+        
         return Response.ok("""{"id" : "$output", "error": "$errorString"}""");
       }
     
-    // dont work
     case "/deleteAccount":
       {
         String output = '';
@@ -57,9 +54,6 @@ Future<Response> handleRequest(Request request) async {
 
         db.dispose();
 
-        if (output == '') {
-          errorString = "true";
-        }
         return Response.ok("""{"id" : "$output", "error": "$errorString"}""");
       }
 
@@ -86,9 +80,6 @@ Future<Response> handleRequest(Request request) async {
 
         db.dispose();
 
-        if (output == '') {
-          errorString = "true";
-        }
         return Response.ok("""{"id" : "$output", "error": "$errorString"}""");
       }
     
@@ -104,7 +95,7 @@ void main(List<String> arguments) async {
 
   var handler = const Pipeline().addHandler(handleRequest);
 
-  await io.serve(handler, '185.244.51.12', 4044);
+  await io.serve(handler, 'localhost', 4044);
 
   print('Start!');
 }
