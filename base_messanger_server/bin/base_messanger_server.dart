@@ -83,7 +83,55 @@ Future<Response> handleRequest(Request request) async {
         return Response.ok("""{"id" : "$output", "error": "$errorString"}""");
       }
     
+    case "/getContacts":
+      {
+        List<List<String>> contacts = [];
+        Map<String, dynamic> jsonBody = json.decode(await request.readAsString());
+
+        String nikname_ = jsonBody["nikname"];
+
+        var db = sqlite3.open(dbPath);
+
+        var resFromDb = db.select("""SELECT * FROM contacts;""");
+
+        for ( var row in resFromDb )
+        {
+          if (row.values[0] == nikname_)
+          {
+            contacts.add([row.values[1].toString(), row.values[2].toString()]);
+          }
+          else if ( row.values[1] == nikname_ )
+          {
+            contacts.add([row.values[0].toString(), row.values[2].toString()]);
+          }
+        }
+        db.dispose();
+
+        return Response.ok(json.encode(contacts));
+      }
     
+    // unfinished
+    case "/getMessages":
+      {
+
+        Map<String, dynamic> jsonBody = json.decode(await request.readAsString());
+
+        String myNikname_ = jsonBody["myNikname"];
+        String otherNikname_ = jsonBody["otherNikname"];
+
+        var db = sqlite3.open(dbPath);
+
+        var resFromDb = db.select("""SELECT messanger_id FROM contacts WHERE (nikname_left=$myNikname_ AND nikname_right=$otherNikname_) OR (nikname_left=$otherNikname_ AND nikname_right=$myNikname_);""");
+
+        if ( resFromDb.length != 1 ) return Response.ok("""{ "error" : "true"}""");
+
+        // resFromDb = db.select("""SELECT * FROM """);
+
+        db.dispose();
+
+        return Response.ok("");
+      }
+
   }
 
   return Response.ok("""{"error" : "true"}""");
