@@ -83,10 +83,25 @@ class MainPageState extends State<MainPage> {
                   )),
               TextButton(
                   onPressed: () {
-                    gv.loginFlag = false;
-                    Navigator.pop(context);
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => const LoginPage()));
+                    showDialog(
+                      context: context, 
+                      builder: (context) => AlertDialog(
+                        title: const Text("Are you sure?"),
+                        actions: [
+                          TextButton(onPressed: (){
+                            gv.loginFlag = false;
+                            Navigator.pop(context);
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginPage()));
+                          }, 
+                          child: const Text("Yes")),
+                          TextButton(onPressed: (){
+                            Navigator.pop(context);
+                          }, 
+                          child: const Text("No")),
+                        ],
+                      )
+                    );
+
                   },
                   child: Container(
                     alignment: Alignment.center,

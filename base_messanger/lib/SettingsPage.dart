@@ -30,7 +30,7 @@ class SettingsPageState extends State<SettingsPage> {
             height: 200,
             width: 200,
           ),
-          ),
+        ),
       );
     }
 
@@ -56,20 +56,48 @@ class SettingsPageState extends State<SettingsPage> {
             "Font size",
           ),)
         ),
-        Slider(
-            value: gv.fontSize.toDouble(),
-            min: 10,
-            max: 60,
-            onChanged: (value) {
-              gv.fontSize = value.toInt();
-              setState(() {
-                
-              });
-            },
-          ),
+        SliderWidget(),
         ],
       )
       ),
+    );
+  }
+}
+
+
+class SliderWidget extends StatefulWidget {
+  @override
+  SliderWidgetState createState()=> SliderWidgetState();
+}
+
+class SliderWidgetState extends State<SliderWidget> {
+
+  int customFontSize = 20;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 120,
+      child: Column(
+        children: [
+          Slider(
+        value: customFontSize.toDouble(),
+        min: 10,
+        max: 60,
+        onChanged: (value) {
+        customFontSize = value.toInt();
+        setState(() {});
+        },
+      ),
+      Text(
+        "Size",
+        style: TextStyle(
+          color: Colors.blue,
+          fontSize: customFontSize.toDouble(),
+        ),
+      )
+        ],
+      )
     );
   }
 }
