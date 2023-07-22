@@ -9,8 +9,6 @@ class SettingsPage extends StatefulWidget {
 class SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
-
-
     List<Widget> wallpepar = [];
     for (int i = 0; i < gv.backs.length; i+=1) {
       wallpepar.add(
@@ -35,6 +33,15 @@ class SettingsPageState extends State<SettingsPage> {
     }
 
     return Scaffold(
+      bottomNavigationBar: TextButton(
+        onPressed: () {},
+        child: const Text(
+          "Apply",
+          style: TextStyle(
+            fontSize: 20
+          ),
+        ),
+      ),
       body: MaterialApp(
       home: ListView(
         children: [
